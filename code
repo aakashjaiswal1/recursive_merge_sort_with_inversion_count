@@ -1,0 +1,171 @@
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+/**
+ * Created by sky on 20/5/18.
+ * www.github.com/aakashjaiswal1
+ * aakashjaiswal@hotmail.co.in
+ * aakashjaiswal.in@gmail.com
+ * people die if they are killed
+ */
+public class mergesort2 {
+    static long ans=0;
+    public static void main(String[] args) {
+      in = new FastReader();
+      int T=ni();
+      while (T-->0){
+          ans=0;
+          int no=ni();
+          int[] arr=takeIntegerArrayInput(no);
+        long kk=  Sort(arr,0,arr.length-1);
+          System.out.println(kk);
+
+      }
+    }
+    static long Sort(int[] arr,int l,int r){
+        long count=0;
+        int m=(l+r)/2;
+        if (l<r){
+           count+= Sort(arr,l,m);
+            count+= Sort(arr,m+1,r);
+               count+= MERGE(arr,l,m,r);
+        }
+        return count;
+    }
+    static long MERGE(int[] arr,int l,int m,int r){
+        long count=0;
+        int[] temp=new int[r-l+1];
+        int pos=0;
+        int i=l;
+        int j=m+1;
+        while (i<=m&&j<=r){
+            if (arr[i]<=arr[j]){
+                temp[pos]=arr[i];
+                ++i;
+            }else {
+                temp[pos]=arr[j];
+                ++j;
+                count+=m-i+1 ;
+                ans+=m-i+1;
+            }
+            ++pos;
+        }
+        while (i<=m){
+            temp[pos]=arr[i];
+            ++i;
+            ++pos;
+        }
+        while (j<=r){
+            temp[pos]=arr[j];
+            ++j;
+            ++pos;
+        }
+
+        for (int k=0;k<temp.length;++k){
+            arr[l+k]=temp[k];
+        }
+        return count;
+    }
+
+    static int[]  takeIntegerArrayInput(int no){
+        int[] arr=new int[no];
+        for (int i=0;i<no;++i){
+            arr[i]=ni();
+        }
+        return arr;
+    }
+    static long fast_Multiply(long no , long pow){
+        long result=1;
+        while (pow>0){
+            if ((pow&1)==1){
+                result=result*no;
+            }
+            no=no*no;
+            pow>>=1;
+        }
+        return result;
+    }
+
+    static long[]  takeLongArrayInput(int no){
+        long[] arr=new long[no];
+        for (int i=0;i<no;++i){
+            arr[i]=ni();
+        }
+        return arr;
+    }
+    static final long MOD = (long)1e9+7;
+    static FastReader in;
+
+
+    static void p(Object o){
+        System.out.print(o);
+    }
+
+    static void pn(Object o){
+        System.out.println(o);
+    }
+
+    static String n(){
+        return in.next();
+    }
+
+    static String nln(){
+        return in.nextLine();
+    }
+
+    static int ni(){
+        return Integer.parseInt(in.next());
+    }
+
+    static int[] ia(int N){
+        int[] a = new int[N];
+        for(int i = 0; i<N; i++)a[i] = ni();
+        return a;
+    }
+
+    static long[] la(int N){
+        long[] a = new long[N];
+        for(int i = 0; i<N; i++)a[i] = nl();
+        return a;
+    }
+
+    static long nl(){
+        return Long.parseLong(in.next());
+    }
+
+    static double nd(){
+        return Double.parseDouble(in.next());
+    }
+
+    static class FastReader{
+        BufferedReader br;
+        StringTokenizer st;
+        public FastReader(){
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
+
+        String next(){
+            while (st == null || !st.hasMoreElements()){
+                try{
+                    st = new StringTokenizer(br.readLine());
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+
+        String nextLine(){
+            String str = "";
+            try{
+                str = br.readLine();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            return str;
+        }
+    }
+}
